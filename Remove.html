@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Student Data Collection</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">    
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+    </head>
+
+    <body style="background-image: url(https://img.freepik.com/free-vector/people-work-with-data-analysis-research_107791-9685.jpg?w=900&t=st=1667985730~exp=1667986330~hmac=8e0c533ff7dd5f9163313e8822d1a82be7d955325ea468c6372896c2f8287961)">
+        <div class="container">
+            <nav>
+                <div class="menu">
+                    <div class="logo">
+
+                        <a href="#">Remove Student Data</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="center">
+                <form id="studentForm" method="post">
+                    <div class="form-group">
+                        <span><h2><label for="studentId">Student ID:</label></h2> <label id="studentIdMsg">
+                            </label></span>
+                        <input type="Number" class="form-control" name="studentId" id="Id"
+                               placeholder="Enter Student ID to remove" required>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="window.location.href = 'HomePage.html'; return true;" />Back</button>
+
+                    <input type="button" class="btn btn-primary" id="Id" value="Update Data"
+                           onclick="deleteData();">
+                </form>
+            </div>
+        </div>
+        <script>
+
+            function deleteData() {
+
+                var id = $("#Id").val();
+
+                var reqString = createREMOVERecordRequest("90937629|-31949269131527796|90952810", "Student", "Student-Rel", id);
+                alert(reqString);
+                jQuery.ajaxSetup({async: false});
+                var resultObj = executeCommandAtGivenBaseUrl(reqString,
+                        "http://api.login2explore.com:5577", "/api/iml");
+                alert(JSON.stringify(resultObj));
+                jQuery.ajaxSetup({async: true});
+
+
+            }
+        </script>
+    </body>
+</html>

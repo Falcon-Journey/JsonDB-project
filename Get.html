@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Student Data Collection</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">    
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+    </head>
+
+    <body style="background-image: url(https://img.freepik.com/free-vector/white-background-with-blue-tech-hexagon_1017-19366.jpg?w=900&t=st=1667985855~exp=1667986455~hmac=ccafb0e53c7b477d549469e79cab5233593eeec7529bf7bef65cf0280e2a0dc0)">
+        <div class="container">
+            <nav>
+                <div class="menu">
+                    <div class="logo">
+
+                        <a href="#">Get Student Data</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="center">
+                <form id="studentForm" method="post">
+                    <div class="form-group">
+                        <span><h2><label for="studentId">Student ID:</label></h2> <label id="studentIdMsg">
+                            </label></span>
+                        <input type="Number" class="form-control" name="studentId" id="Id"
+                               placeholder="Enter Student ID to get data" required>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="window.location.href = 'HomePage.html'; return true;" />Back</button>
+
+                    <input type="button" class="btn btn-primary" id="Id" value="Get Data"
+                           onclick="GetData();">
+                </form>
+            </div>
+        </div>
+        <script>
+
+            function GetData() {
+
+                var id = $("#Id").val();
+
+                var reqString = createGET_RECORDRequest("90937629|-31949269131527796|90952810", "Student", "Student-Rel", id);
+                alert(reqString);
+                jQuery.ajaxSetup({async: false});
+                var resultObj = executeCommandAtGivenBaseUrl(reqString,
+                        "http://api.login2explore.com:5577", "/api/irl");
+                alert(JSON.stringify(resultObj));
+                jQuery.ajaxSetup({async: true});
+                   
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Student Data Collection</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">    
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+
+    </head>
+    <body style="background-image: url(https://img.freepik.com/free-vector/illustration-data-analysis-graph_53876-20421.jpg?w=1060&t=st=1667985910~exp=1667986510~hmac=a99973bf217e16329068260fea81b3d36b29502377431b57790b34a6c2372f43)">
+        <div class="container">
+                    <nav>
+            <div class="menu">
+                <div class="logo">
+
+                    <a href="#">Update Student Data</a>
+                </div>
+            </div>
+        </nav>
+            <div class="center">
+            <form id="studentForm" method="post">
+                <div class="form-group">
+                    <span><h2><label for="studentId">Student ID:</label></h2> <label id="studentIdMsg">
+                        </label></span>
+                    <input type="text" class="form-control" name="studentId" id="studentId"
+                           placeholder="Enter Student ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentName"><h2>Student Name:</h2></label>
+                    <input type="text" class="form-control" id="studentName"
+                           placeholder="Enter Student Name" name="studentName">
+                </div>
+                <div class="form-group">
+                    <label for="studentEmail"><h2>Email:</h2></label>
+                    <input type="email" class="form-control" id="studentEmail"
+                           placeholder="Enter Student Email" name="studentEmail">
+                </div>
+                <div class="form-group">
+                    <label for="studentEmail"><h2>Phone number:</h2></label>
+                    <input type="number" class="form-control" id="studentphoneno"
+                           placeholder="Enter Student Phone Number" name="studentphoneno">
+                </div>
+                <div class="form-group">
+                    <label for="updateID"><h2>Update Id number<h2></label>
+                    <label for="updateID"></label>
+                    <input type="number" class="form-control" id="updateId"
+                           placeholder="Enter the ID you want to update" name="updateId">
+                </div>
+            
+                <button type="button" class="btn btn-primary" onclick="window.location.href = 'HomePage.html'; return true;" />Back</button>
+
+                <input type="button" class="btn btn-primary" id="studentUpdate" value="Update Data"
+                       onclick="UpdateStudentData();">
+                            </form>
+
+                </div>
+
+        </div>
+        <script>
+            $("#studentId").focus();
+            function validateAndGetFormData() {
+                var studentIdVar = $("#studentId").val();
+                if (studentIdVar === "") {
+                    alert("Student ID Required Value");
+                    $("#studentId").focus();
+                    return "";
+                }
+                var studentNameVar = $("#studentName").val();
+                if (studentNameVar === "") {
+                    alert("Student Name is Required Value");
+                    $("#studentName").focus();
+                    return "";
+                }
+                var studentEmailVar = $("#studentEmail").val();
+                if (studentEmailVar === "") {
+                    alert("Student Email is Required Value");
+                    $("#studentEmail").focus();
+                    return "";
+                }
+                var studentPhoneVar = $("#studentphoneno").val();
+                if (studentPhoneVar === "") {
+                    alert("Student Phone number is Required Value");
+                    $("#studentphoneno").focus();
+                    return "";
+                }
+                var updateidVar = $("#updateId").val();
+                if (updateidVar === "") {
+                    alert("Update Id is Required Value");
+                    $("#updateId").focus();
+                    return "";
+                }
+
+                var jsonStrObj = {
+                    id: studentIdVar,
+                    name: studentNameVar,
+                    email: studentEmailVar,
+                    mobileno: studentPhoneVar,
+
+                };
+                return JSON.stringify(jsonStrObj);
+            }
+
+
+            function resetForm() {
+                $("#studentId").val("")
+                $("#studentName").val("");
+                $("#studentEmail").val("");
+                $("#studentphoneno").val("");
+                $("#updateId").val("");
+                $("#studentId").focus();
+            }
+
+            function UpdateStudentData() {
+                var jsonStr = validateAndGetFormData();
+                if (jsonStr === "") {
+                    return;
+                }
+                var updateIdVar = $("#updateId").val();
+                var UpdateReqStr = createUPDATERecordRequest("90937629|-31949269131527796|90952810",
+                        jsonStr, "Student", "Student-Rel", updateIdVar);
+                alert(UpdateReqStr);
+                jQuery.ajaxSetup({async: false});
+                var resultObj = executeCommandAtGivenBaseUrl(UpdateReqStr,
+                        "http://api.login2explore.com:5577", "/api/iml");
+                alert(JSON.stringify(resultObj));
+                jQuery.ajaxSetup({async: true});
+                resetForm();
+            }
+
+        </script>
+
+    </body>
+</html>
